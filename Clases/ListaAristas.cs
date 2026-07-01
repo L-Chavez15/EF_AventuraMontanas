@@ -30,5 +30,18 @@ namespace Clases
                 temp.sig = nuevo;
             }
         }
+
+        public void Mostrar()
+        {
+            Arista temp = primero;
+            int i = 1;
+            while (temp != null)
+            {
+                Console.WriteLine(i + ". Destino: " + temp.destino.dato.nombre + " - Gasta estamina: " + temp.peso);
+                temp = temp.sig;
+                i++;
+            }
+        }
+
     }
 }
