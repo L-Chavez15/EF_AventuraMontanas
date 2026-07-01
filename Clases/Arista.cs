@@ -8,5 +8,9 @@ namespace Clases
 {
     public class Arista
     {
+        public Vertice destino;
+        public float peso;
+
+        public Arista sig = null;
     }
 }
