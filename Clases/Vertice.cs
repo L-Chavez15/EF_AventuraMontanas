@@ -5,5 +5,7 @@
         public Lugar dato;
         public string dato2;//pila
         public Vertice sig = null;
+
+        public ListaAristas ls = new ListaAristas();
     }
 }
