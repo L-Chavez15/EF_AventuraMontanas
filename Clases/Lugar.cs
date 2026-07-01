@@ -5,7 +5,7 @@
         //punto de control
         public string nombre;
         public string clima;
-        public string temperatura;
+        public int temperatura;
 
         public override string ToString()
         {
