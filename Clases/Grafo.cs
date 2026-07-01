@@ -37,5 +37,16 @@ namespace Clases
             return l_vertices.primero;
         }
 
+        public void GenerarMatriz()
+        {
+            Random r = new Random();
+            for (int i = 0; i < cantidad; i++)
+            {
+                for (int j = 0; j < cantidad; j++)
+                {
+                    ma[i, j] = r.Next(1, 10);
+                }
+            }
+        }
     }
 }
