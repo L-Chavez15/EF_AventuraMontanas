@@ -89,7 +89,7 @@ namespace Clases
 
             Console.WriteLine("Saltos disponibles:");
             v.ls.Mostrar();
-            Console.WriteLine("--------------------------------");
+            Console.WriteLine("-----------------------------------------------------");
             Console.Write("* Ingresa el número del camino que deseas tomar: ");
 
             int op = int.Parse(Console.ReadLine());
@@ -114,8 +114,79 @@ namespace Clases
             }
         }
 
-        //Metodo de Dijkstra para encontrar la ruta más corta
-        //Creamos una busqueda de un indice de un vertice en la lista de vertices
+        //metodo de dijkstra para encontrar la ruta más corta
+        public void CalcularRutaOptima(Vertice inicio, ref float total, ref string ruta)
+        {
+            // 1) Reiniciamos los datos de Dijkstra de cada vértice, recorriendo la lista enlazada
+            Vertice temp = l_vertices.primero;
+            while (temp != null)
+            {
+                temp.distancia = float.MaxValue;
+                temp.visitado = false;
+                temp.anterior = null;
+                temp = temp.sig;
+            }
 
+            inicio.distancia = 0;
+
+            // 2) Bucle principal de Dijkstra: se repite "cantidad" de veces
+            for (int c = 0; c < cantidad; c++)
+            {
+                // Buscamos, recorriendo la lista enlazada, el vértice NO visitado con menor distancia
+                // (esto reemplaza a la cola de prioridad de la versión clásica)
+                Vertice u = null;
+                float menor = float.MaxValue;
+                Vertice recorrido = l_vertices.primero;
+                while (recorrido != null)
+                {
+                    if (!recorrido.visitado && recorrido.distancia < menor)
+                    {
+                        menor = recorrido.distancia;
+                        u = recorrido;
+                    }
+                    recorrido = recorrido.sig;
+                }
+
+                if (u == null) break; // ya no quedan nodos alcanzables
+                u.visitado = true;
+
+                // 3) Relajamos las aristas que salen de u
+                Arista a = u.ls.primero;
+                while (a != null)
+                {
+                    float nuevaDistancia = u.distancia + a.peso;
+                    if (nuevaDistancia < a.destino.distancia)
+                    {
+                        a.destino.distancia = nuevaDistancia;
+                        a.destino.anterior = u;
+                    }
+                    a = a.sig;
+                }
+            }
+
+            // 4) La meta es el último vértice de la lista enlazada ("La Cumbre")
+            Vertice destino = l_vertices.primero;
+            while (destino.sig != null)
+            {
+                destino = destino.sig;
+            }
+            total = destino.distancia;
+
+            // 5) Reconstruimos la ruta usando nuestra Pila propia
+            //    (anterior nos da el camino al revés: de la meta al inicio)
+            Pila pila = new Pila();
+            Vertice actual = destino;
+            while (actual != null)
+            {
+                pila.Apilar(actual.dato.nombre);
+                actual = actual.anterior;
+            }
+
+            ruta = "";
+            while (!pila.EstaVacia())
+            {
+                ruta += " -> " + pila.Desapilar();
+            }
+        }
     }
 }
