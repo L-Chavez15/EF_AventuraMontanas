@@ -8,12 +8,16 @@ namespace Clases
 {
     public class Pila
     {
-        public Vertice cima = null;
+        //Usamos pila para organiar el orden al momento de desapilar
+        //Disjktra crea la ruta yendo desde el destion al origen
+        //Por lo que al momento de mostrar la ruta, se debe desapilar para mostrarla en el orden correcto
+
+        public Nodo cima = null;
         
         public void Apilar(string nombreLugar)
         {
-            Vertice nuevo = new Vertice();
-            nuevo.dato2 = nombreLugar;
+            Nodo nuevo = new Nodo();
+            nuevo.dato = nombreLugar;
 
             nuevo.sig = cima;
             cima = nuevo;
@@ -24,7 +28,7 @@ namespace Clases
             string dato = null;
             if (cima != null)
             {
-                dato = cima.dato2;
+                dato = cima.dato;
                 cima = cima.sig;
             }
             return dato;
@@ -33,5 +37,6 @@ namespace Clases
         {
             return cima == null;
         }
+        
     }
 }

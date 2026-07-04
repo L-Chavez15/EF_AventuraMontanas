@@ -8,6 +8,7 @@ namespace Clases
 {
     public class ListaAristas
     {
+        //imprime cada arista, mostrando el destino y el peso de la arista
         public Arista primero = null;
 
         public void Insertar(Vertice v, float p)
@@ -33,6 +34,8 @@ namespace Clases
 
         public void Mostrar()
         {
+            //si eliminamos mostrar, no se verian las opciones
+            //dijkstra seguiria funcionando, pero no se verian las opciones de los caminos
             Arista temp = primero;
             int i = 1;
             while (temp != null)

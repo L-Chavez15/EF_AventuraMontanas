@@ -12,7 +12,7 @@ namespace Ejecucion
         static void Main(string[] args)
         {
             int cantidadNodos = 10;
-            Grafo montaña= new Grafo(cantidadNodos);
+            Grafo montaña = new Grafo(cantidadNodos);
 
             montaña.GenerarMatriz();
             montaña.CrearGarfo();
@@ -49,7 +49,7 @@ namespace Ejecucion
                 Console.WriteLine("╚═══════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.Write("Elige una opción: ");
-                opcion=int.Parse(Console.ReadLine());
+                opcion = int.Parse(Console.ReadLine());
 
                 switch (opcion)
                 {
@@ -64,7 +64,7 @@ namespace Ejecucion
                         MostrarResultados(rutaJugador, estaminaJugador, rutaOptima, estaminaOptima);
 
                         Console.ResetColor();
-                        Console.WriteLine("\nPresione cualquier tecla para finalizar...");
+                        Console.WriteLine("\nPresione cualquier tecla para continuar...");
                         Console.ReadKey();
                         Console.ResetColor();
                         break;
@@ -72,6 +72,7 @@ namespace Ejecucion
                         Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.WriteLine("\n¡Gracias por jugar! Hasta la próxima escalada. 🏔️");
                         Console.ResetColor();
+                        opcion = 0; // arreglo: fuerza la salida del do-while
                         break;
                     default:
                         Console.WriteLine("INGRESE UNA OPCIÓN VÁLIDA");
@@ -81,9 +82,8 @@ namespace Ejecucion
                         Console.ResetColor();
                         break;
                 }
-                Console.ReadKey();
 
-            } while (opcion!=0);
+            } while (opcion != 0);
 
         }
 

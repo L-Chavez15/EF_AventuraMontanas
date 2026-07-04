@@ -2,11 +2,11 @@
 {
     public class Vertice
     {
-        public Lugar dato;
-        public string dato2;//pila
-        public Vertice sig = null;
+        public Lugar dato;//Guardamos informacion del lugar
 
-        public ListaAristas ls = new ListaAristas();
+        public Vertice sig = null;//Siguiente vertice en la lista de vertices
+
+        public ListaAristas ls = new ListaAristas();//Lista de aristas que salen de este vertice
 
         //Algoritmo de disjktra
         public float distancia;

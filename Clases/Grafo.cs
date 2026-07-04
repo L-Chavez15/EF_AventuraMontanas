@@ -20,18 +20,20 @@ namespace Clases
 
         public Grafo(int cant)
         {
-            cantidad = cant;
+
+            cantidad = cant;// si elminamos esto, el bucle de dijkstra no se ejecutará correctamente
+            //si elminamos cantidad dijkstra no sabrá cuántos vértices hay en el grafo y no podrá recorrerlos correctamente
             Random r = new Random();
             for (int i = 0; i < cantidad; i++)
             {
-                Lugar l = new Lugar();
+                Lugar l = new Lugar();//crea un nuevo lugar por cada nombre
                 l.nombre = nom_puntos[i];
                 l.clima = climas[i];
                 l.temperatura = r.Next(-10, 15);
 
                 l_vertices.Insertar(l);
             }
-            ma = new int[cant, cant];
+            ma = new int[cant, cant];//prepara la matriz
         }
         public Vertice GetInicio()
         {
@@ -45,12 +47,38 @@ namespace Clases
             {
                 for (int j = 0; j < cantidad; j++)
                 {
-                    ma[i, j] = r.Next(1, 10);
+                    if (j == i + 1)//conexion con el siguiente nodo
+                                   // garantiza que siempre se pueda llegar a la meta
+                                   //si eliminamos esto, el grafo podría no tener un camino hacia la meta
+                    {
+                        ma[i, j] = 1; // salto obligado al siguiente: garantiza que siempre se pueda llegar a la meta
+                    }
+                    else if (j > i + 1)
+                    {
+                        // ~40% de probabilidad de atajo extra
+                        int numero = r.Next(0, 10);
+                        if (numero < 4)
+                        {
+                            ma[i, j] = 1;
+                        }
+                        else
+                        {
+                            ma[i, j] = 0;
+                        }
+                    }
+                    else
+                    {
+                        ma[i, j] = 0; //  evita ciclos infinitos
+                                      // para ir siempre hasta la cumbre
+                                      //pero revisar la posibilidad de regresar a un nodo anteriora
+
+                    }
                 }
             }
         }
         public void CrearGarfo()
         {
+            //si eliminamos esto, el grafo no tendrá aristas reales y no se podrá recorrer
             Random r = new Random();
             Vertice temp_i = l_vertices.primero;
             for (int i = 0; i < ma.GetLength(0); i++)
@@ -60,7 +88,9 @@ namespace Clases
                 {
                     if (ma[i, j] == 1)
                     {
+                        //traduce la matriz de adyacencia en aristas, con pesos aleatorios entre 10 y 50
                         temp_i.ls.Insertar(temp_j, r.Next(10, 50));
+                        //si borramos esto, ningún vertice tendría aristas
                     }
                     temp_j = temp_j.sig;
                 }
@@ -79,7 +109,7 @@ namespace Clases
             Console.WriteLine("   Estamina gastada: " + total + " Pts.");
             Console.WriteLine("==================================================\n");
 
-            if (v.ls.primero == null)
+            if (v.ls.primero == null)//significa que llego a la cumbre, ya que no hay más aristas que recorrer
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(" ¡HAS LLEGADO A LA CUMBRE!");
@@ -117,24 +147,22 @@ namespace Clases
         //metodo de dijkstra para encontrar la ruta más corta
         public void CalcularRutaOptima(Vertice inicio, ref float total, ref string ruta)
         {
-            // 1) Reiniciamos los datos de Dijkstra de cada vértice, recorriendo la lista enlazada
+            //1. Preparación del terreno (Inicialización)
             Vertice temp = l_vertices.primero;
-            while (temp != null)
+            while (temp != null)//recorremos los vertices
             {
-                temp.distancia = float.MaxValue;
+                temp.distancia = float.MaxValue;//max.value = infinito (3.4x10^38)
                 temp.visitado = false;
                 temp.anterior = null;
                 temp = temp.sig;
             }
-
             inicio.distancia = 0;
 
-            // 2) Bucle principal de Dijkstra: se repite "cantidad" de veces
-            for (int c = 0; c < cantidad; c++)
+            //2. Buscar el paso más corto
+            //ver si se puede usar COLA
+            for (int i = 0; i < cantidad; i++)//se repite tantas veces como vértices haya
             {
-                // Buscamos, recorriendo la lista enlazada, el vértice NO visitado con menor distancia
-                // (esto reemplaza a la cola de prioridad de la versión clásica)
-                Vertice u = null;
+                Vertice u = null;//buscamos el vértice no visitado con la menor distancia
                 float menor = float.MaxValue;
                 Vertice recorrido = l_vertices.primero;
                 while (recorrido != null)
@@ -150,21 +178,20 @@ namespace Clases
                 if (u == null) break; // ya no quedan nodos alcanzables
                 u.visitado = true;
 
-                // 3) Relajamos las aristas que salen de u
+                //3.Evaluar los caminos posibles
                 Arista a = u.ls.primero;
                 while (a != null)
                 {
-                    float nuevaDistancia = u.distancia + a.peso;
-                    if (nuevaDistancia < a.destino.distancia)
+                    float nuevaDistancia = u.distancia + a.peso;//calculamos la distancia desde el inicio hasta el destino a través de u
+                    if (nuevaDistancia < a.destino.distancia)//atajo
                     {
                         a.destino.distancia = nuevaDistancia;
-                        a.destino.anterior = u;
+                        a.destino.anterior = u;//guardamos el vértice anterior para reconstruir la ruta más tarde
                     }
                     a = a.sig;
                 }
             }
-
-            // 4) La meta es el último vértice de la lista enlazada ("La Cumbre")
+            //4.Identificar la Meta
             Vertice destino = l_vertices.primero;
             while (destino.sig != null)
             {
@@ -172,20 +199,19 @@ namespace Clases
             }
             total = destino.distancia;
 
-            // 5) Reconstruimos la ruta usando nuestra Pila propia
-            //    (anterior nos da el camino al revés: de la meta al inicio)
+            // 5) Reconstruimos la ruta 
             Pila pila = new Pila();
             Vertice actual = destino;
             while (actual != null)
             {
-                pila.Apilar(actual.dato.nombre);
+                pila.Apilar(actual.dato.nombre);//metemos el camino al revés de meta a inicio
                 actual = actual.anterior;
             }
 
             ruta = "";
             while (!pila.EstaVacia())
             {
-                ruta += " -> " + pila.Desapilar();
+                ruta += " -> " + pila.Desapilar();//salen los datos ordenados de inicio a meta
             }
         }
     }
