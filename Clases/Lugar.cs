@@ -6,6 +6,7 @@
         public string nombre;
         public string clima;
         public int temperatura;
+        public string descripcion;
 
         public override string ToString()
         {

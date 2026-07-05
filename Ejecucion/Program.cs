@@ -128,11 +128,11 @@ namespace Ejecucion
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("==========================================================");
+            Console.WriteLine("=====================================================");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("                  *  RESULTADOS  *");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("==============================================================");
+            Console.WriteLine("=====================================================\n");
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("*  TU PARTIDA:");
@@ -143,11 +143,11 @@ namespace Ejecucion
             Console.ResetColor();
             Console.Write("   Estamina total consumida: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(Math.Round(estaminaJugador, 2) + " Pts.");
+            Console.WriteLine(estaminaJugador + " Pts.");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("\n------------------------------------------------------------\n");
+            Console.WriteLine("\n-----------------------------------------------------\n");
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("* RECOMENDACIÓN DEL SISTEMA :");
@@ -162,7 +162,7 @@ namespace Ejecucion
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("\n==============================================================");
+            Console.WriteLine("\n=====================================================");
             Console.ResetColor();
 
             if (estaminaJugador <= estaminaOptima)

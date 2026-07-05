@@ -18,6 +18,18 @@ namespace Clases
                                  "Refugio del Águila", "La Cumbre"  };
         string[] climas = { "Tranquilo", "Nublado", "Viento", "Neblina", "Fantasmal", "Húmedo", "Oscuridad", "Helado", "Ventisca", "Helado" };
 
+        string[] descripciones = {
+            "El sendero comienza suave, entre pastizales y piedras sueltas. Todavía se puede oler el pueblo a lo lejos.",
+            "Los árboles se cierran sobre tu cabeza. El viento se filtra entre las ramas como si murmurara algo que no alcanzas a entender.",
+            "Ruinas cubiertas de musgo asoman entre la niebla. Alguna vez alguien vivió aquí, y ahora solo quedan las piedras.",
+            "Un puente de cuerdas cruje bajo tus pies, colgado sobre un abismo que se pierde en la bruma.",
+            "Un antiguo refugio, alguna vez lujoso, ahora ofrece poco más que paredes rotas y algo de calor para descansar.",
+            "Las paredes de la cueva brillan con cristales que devuelven tu propia luz, multiplicada en mil reflejos.",
+            "Un templo silencioso. Los espejos en sus muros parecen seguir cada uno de tus pasos.",
+            "El hielo cruje bajo tus botas. El frío ya no se siente en la piel, sino en los huesos.",
+            "Un nido de piedra en lo alto, donde las águilas vigilan el valle entero como centinelas eternos.",
+            "La cumbre. El aire es escaso, pero la vista que se abre ante ti hace que cada paso haya valido la pena."
+        };
         public Grafo(int cant)
         {
 
@@ -30,6 +42,7 @@ namespace Clases
                 l.nombre = nom_puntos[i];
                 l.clima = climas[i];
                 l.temperatura = r.Next(-10, 15);
+                l.descripcion = descripciones[i];
 
                 l_vertices.Insertar(l);
             }
@@ -120,14 +133,46 @@ namespace Clases
             Console.WriteLine("Saltos disponibles:");
             v.ls.Mostrar();
             Console.WriteLine("------------------------------------------------------");
-            Console.Write("* Ingresa el número del camino que deseas tomar: ");
 
-            int op = int.Parse(Console.ReadLine());
+            int op = -1;
+            bool entradaValida = false;// no sabemos lo que va a escribir rl usuario
+            while (!entradaValida)
+            {
+                Console.Write("Ingresa el número del camino que deseas tomar (0 para detenerte): ");
+                string entrada = Console.ReadLine();
+
+                if (int.TryParse(entrada, out op))// tryparse intenta convertir la entrada a un número entero, si no puede, devuelve false
+                {
+                    int cantidadOpciones = 0;
+                    Arista contador = v.ls.primero;
+                    while (contador != null)
+                    {
+                        cantidadOpciones++;
+                        contador = contador.sig;
+                    }
+
+                    if (op == 0 || (op >= 1 && op <= cantidadOpciones))
+                    {
+                        entradaValida = true;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("   Ese camino no existe. Intenta de nuevo.");
+                        Console.ResetColor();
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("   Ingresa solo un número.");
+                    Console.ResetColor();
+                }
+            }
             if (op == 0)
             {
                 return;
             }
-
             Arista temp = v.ls.primero;
             for (int i = 1; i < op; i++)
             {
