@@ -99,15 +99,15 @@ namespace Clases
         }
         public void RecorrerGrafo(Vertice v, ref float total, ref string ruta)
         {
-            ruta += " -> " + v.dato.nombre;
+            ruta += " -> " + v.dato.nombre+"\n";
 
             Console.Clear();
-            Console.WriteLine("==================================================");
+            Console.WriteLine("======================================================");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(" * UBICACIÓN ACTUAL: " + v.dato.nombre);
             Console.ResetColor();
-            Console.WriteLine("   Estamina gastada: " + total + " Pts.");
-            Console.WriteLine("==================================================\n");
+            Console.WriteLine("   Estamina gastada: " + Math.Round(total, 2) + " Pts.");
+            Console.WriteLine("======================================================\n");
 
             if (v.ls.primero == null)//significa que llego a la cumbre, ya que no hay más aristas que recorrer
             {
@@ -119,7 +119,7 @@ namespace Clases
 
             Console.WriteLine("Saltos disponibles:");
             v.ls.Mostrar();
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------");
             Console.Write("* Ingresa el número del camino que deseas tomar: ");
 
             int op = int.Parse(Console.ReadLine());

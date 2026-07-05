@@ -33,20 +33,31 @@ namespace Ejecucion
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("╔════════════════════════════════════════════════╗");
+                Console.Write("║");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("           AVENTURA EN LAS MONTAÑAS  ");
+                Console.Write("           AVENTURA EN LAS MONTAÑAS  ");
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("           ║");
                 Console.WriteLine("╠════════════════════════════════════════════════╣");
                 Console.ResetColor();
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("   1. Jugar");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("   2. Salir");
-                Console.ResetColor();
-                Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.WriteLine("╚═══════════════════════════════════════════════╝");
+                Console.WriteLine("║                                                ║");
+                Console.Write("║");
+                Console.ResetColor();
+                Console.Write("   \t\t1. Jugar");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("                         ║");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write("║");
+                Console.ResetColor();
+                Console.Write("   \t\t2. Salir");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("                         ║");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("║                                                ║");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("╚════════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.Write("Elige una opción: ");
                 opcion = int.Parse(Console.ReadLine());
@@ -91,17 +102,22 @@ namespace Ejecucion
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("==================================================");
+            Console.WriteLine("=====================================================");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("        *  SIMULADOR DE ESCALADA CELESTE  *");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("==================================================");
+            Console.WriteLine("=====================================================");
             Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("  Dicen que en la cima de esta montaña vive un");
+            Console.WriteLine("  silencio que ningún viajero ha logrado describir.");
+            Console.WriteLine("  Muchos han partido a buscarlo; pocos han vuelto");
+            Console.WriteLine("  para contarlo.");
+            Console.WriteLine();
             Console.WriteLine("  Elige tu camino con cuidado: cada salto consume");
             Console.WriteLine("  estamina. Al final, el sistema te dirá si tomaste");
-            Console.WriteLine("  la ruta más óptima usando el algoritmo de Dijkstra.");
+            Console.WriteLine("  la ruta más óptima.");
             Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine("==================================================");
+            Console.WriteLine("=====================================================");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("\n Presiona ENTER para empezar a escalar...");
             Console.ResetColor();
@@ -112,52 +128,54 @@ namespace Ejecucion
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("==================================================");
+            Console.WriteLine("==========================================================");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("                  *  RESULTADOS  *");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("==================================================\n");
+            Console.WriteLine("==============================================================");
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("*  TU PARTIDA:");
             Console.ResetColor();
-            Console.WriteLine("   Camino que tomaste:");
+            Console.WriteLine("* Camino que tomaste:");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("   " + rutaJugador.Substring(4));
+            Console.WriteLine(rutaJugador);
             Console.ResetColor();
             Console.Write("   Estamina total consumida: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(estaminaJugador + " Pts.");
+            Console.WriteLine(Math.Round(estaminaJugador, 2) + " Pts.");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("\n--------------------------------------------------\n");
+            Console.WriteLine("\n------------------------------------------------------------\n");
 
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("* RECOMENDACIÓN DEL SISTEMA :");
             Console.ResetColor();
             Console.WriteLine("   El camino más óptimo era:");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("   " + rutaOptima.Substring(4));
+            Console.WriteLine("   " + rutaOptima);
             Console.ResetColor();
             Console.Write("   Estamina mínima posible: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(estaminaOptima + " Pts.");
+            Console.WriteLine(Math.Round(estaminaOptima, 2) + " Pts.");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("\n==================================================");
+            Console.WriteLine("\n==============================================================");
             Console.ResetColor();
 
             if (estaminaJugador <= estaminaOptima)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("\n ¡Felicidades! Encontraste la ruta perfecta.");
+                Console.WriteLine(" La montaña recordará tu nombre entre sus vientos.");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\n  Sobreviviste, pero el sistema encontró una ruta mejor.");
+                Console.WriteLine("  Quizás en tu próxima escalada, la montaña sea más generosa.");
             }
             Console.ResetColor();
         }
