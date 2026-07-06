@@ -10,7 +10,7 @@ namespace Clases
     {
         //Usamos lista simple para saber cuantos nodos hay en el grafo y poder recorrerlos
         public Vertice primero = null;
-        public void Insertar(Lugar d)
+        public void Insertar(Lugar d)//crear un nuevo vertice y lo agrega al final
         {
             Vertice nuevo = new Vertice();
             nuevo.dato = d;
