@@ -120,6 +120,10 @@ namespace Clases
             Console.WriteLine(" * UBICACIÓN ACTUAL: " + v.dato.nombre);
             Console.ResetColor();
             Console.WriteLine("   Estamina gastada: " + Math.Round(total, 2) + " Pts.");
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("   Clima: " + v.dato.clima + "   |   Temperatura: " + v.dato.temperatura + "°C");
+            Console.ResetColor();
+            Console.WriteLine("   " + v.dato.descripcion);
             Console.WriteLine("======================================================\n");
 
             if (v.ls.primero == null)//significa que llego a la cumbre, ya que no hay más aristas que recorrer

@@ -40,7 +40,13 @@ namespace Clases
             int i = 1;
             while (temp != null)
             {
-                Console.WriteLine(i + ". Destino: " + temp.destino.dato.nombre + " - Gasta estamina: " + temp.peso);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("   " + i + ")");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(temp.destino.dato.nombre);
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine(" - Estamina requerida: " + temp.peso + " Pts.");
+                Console.ResetColor();
                 temp = temp.sig;
                 i++;
             }
